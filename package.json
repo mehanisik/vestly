@@ -7,6 +7,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
+    "check": "ultracite check",
+    "fix": "ultracite fix",
     "prepare": "lefthook install"
   },
   "devDependencies": {
