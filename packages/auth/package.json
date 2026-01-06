@@ -1,0 +1,10 @@
+{
+  "name": "@vestly/auth",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "dependencies": {
+    "@vestly/db": "workspace:*",
+    "better-auth": "^1.4.10"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "@vestly/config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.js",
+  "dependencies": {
+    "ultracite": "7.0.6"
+  }
+}

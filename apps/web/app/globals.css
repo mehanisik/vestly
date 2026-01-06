@@ -121,6 +121,91 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
+    background-image:
+      radial-gradient(
+        at 0% 0%,
+        oklch(var(--primary) / 0.05) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 100% 0%,
+        oklch(var(--primary) / 0.02) 0px,
+        transparent 50%
+      );
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/40 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)];
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+  }
+
+  .text-gradient {
+    @apply bg-linear-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent;
+  }
+
+  .bg-grid-primary {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(
+        to right,
+        oklch(var(--primary) / 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        oklch(var(--primary) / 0.05) 1px,
+        transparent 1px
+      );
+  }
+
+  .animate-in-fade {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/40 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)];
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)];
+  }
+
+  .text-gradient {
+    @apply bg-linear-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent;
+  }
+
+  .bg-grid-primary {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(
+        to right,
+        oklch(var(--primary) / 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        oklch(var(--primary) / 0.05) 1px,
+        transparent 1px
+      );
   }
 }
