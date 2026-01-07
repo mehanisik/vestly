@@ -1,26 +1,37 @@
 "use client";
 
+import { authClient } from "@vestly/auth/client";
+import { Badge } from "@vestly/ui/components/badge";
+import { Button, buttonVariants } from "@vestly/ui/components/button";
+import { Separator } from "@vestly/ui/components/separator";
+import { cn } from "@vestly/ui/lib/utils";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { api } from "@/lib/api";
-import { authClient } from "@/lib/auth-client";
 
 export default function Home() {
   const { data: session } = authClient.useSession();
   const [message, setMessage] = useState("Loading...");
 
   useEffect(() => {
-    api.hello.$get().then(async (res) => {
-      const data = await res.json();
-      setMessage(data.message);
-    });
+    async function fetchGreeting() {
+      try {
+        const res = await api.hello.$get();
+        const data = await res.json();
+        setMessage(data.message);
+      } catch {
+        setMessage("API Error");
+      }
+    }
+    fetchGreeting();
   }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-background p-6 font-sans text-foreground selection:bg-primary/30">
-      <nav className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between border-b bg-background/80 p-4 backdrop-blur-md">
+      <nav
+        aria-label="Main navigation"
+        className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between border-b bg-background/80 p-4 backdrop-blur-md"
+      >
         <div className="flex items-center gap-2">
           <span className="font-bold text-xl tracking-tighter">VESTLY</span>
           <Badge variant="secondary">Alpha</Badge>
@@ -41,12 +52,18 @@ export default function Home() {
             </div>
           ) : (
             <>
-              <Button size="sm" variant="ghost">
-                <a href="/login">Log In</a>
-              </Button>
-              <Button size="sm">
-                <a href="/signup">Sign Up</a>
-              </Button>
+              <Link
+                className={cn(buttonVariants({ variant: "ghost", size: "sm" }))}
+                href="/login"
+              >
+                Log In
+              </Link>
+              <Link
+                className={cn(buttonVariants({ size: "sm" }))}
+                href="/signup"
+              >
+                Sign Up
+              </Link>
             </>
           )}
         </div>
@@ -73,16 +90,24 @@ export default function Home() {
             </Button>
           ) : (
             <>
-              <Button className="h-10 w-full text-sm sm:w-48" size="lg">
-                <a href="/signup">Get Started</a>
-              </Button>
-              <Button
-                className="h-10 w-full text-sm sm:w-48"
-                size="lg"
-                variant="outline"
+              <Link
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-10 w-full text-sm sm:w-48"
+                )}
+                href="/signup"
               >
-                <a href="/login">Documentation</a>
-              </Button>
+                Get Started
+              </Link>
+              <Link
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "h-10 w-full text-sm sm:w-48"
+                )}
+                href="/login"
+              >
+                Documentation
+              </Link>
             </>
           )}
         </div>
@@ -90,30 +115,30 @@ export default function Home() {
         <Separator className="my-8" />
 
         <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3">
-          <div className="space-y-2 border border-primary/10 bg-card/40 p-4 backdrop-blur-sm">
+          <section className="space-y-2 border border-primary/10 bg-card/40 p-4 backdrop-blur-sm">
             <h3 className="font-bold text-[10px] text-primary uppercase tracking-widest">
               Status
             </h3>
             <p className="text-muted-foreground text-xs">
               API Connection: <span className="text-foreground">{message}</span>
             </p>
-          </div>
-          <div className="space-y-2 border border-primary/10 bg-card/40 p-4 backdrop-blur-sm">
+          </section>
+          <section className="space-y-2 border border-primary/10 bg-card/40 p-4 backdrop-blur-sm">
             <h3 className="font-bold text-[10px] text-primary uppercase tracking-widest">
               Tech
             </h3>
             <p className="text-muted-foreground text-xs">
               Hono + Better Auth + Drizzle
             </p>
-          </div>
-          <div className="space-y-2 border border-primary/10 bg-card/40 p-4 backdrop-blur-sm">
+          </section>
+          <section className="space-y-2 border border-primary/10 bg-card/40 p-4 backdrop-blur-sm">
             <h3 className="font-bold text-[10px] text-primary uppercase tracking-widest">
               Safety
             </h3>
             <p className="text-muted-foreground text-xs">
               100% Type-safe RPC Client
             </p>
-          </div>
+          </section>
         </div>
       </div>
     </main>

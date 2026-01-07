@@ -6,6 +6,6 @@
     "ultracite/biome/react"
   ],
   "files": {
-    "includes": ["!apps/web/components/ui/*"]
+    "includes": ["!packages/ui/components/*"]
   }
 }

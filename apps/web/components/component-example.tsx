@@ -30,9 +30,6 @@ import {
   TranslateIcon,
   UserIcon,
 } from "@phosphor-icons/react";
-import NextImage from "next/image";
-import { useState } from "react";
-import { Example, ExampleWrapper } from "@/components/example";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -44,9 +41,9 @@ import {
   AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+} from "@vestly/ui/components/alert-dialog";
+import { Badge } from "@vestly/ui/components/badge";
+import { Button } from "@vestly/ui/components/button";
 import {
   Card,
   CardAction,
@@ -55,7 +52,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@vestly/ui/components/card";
 import {
   Combobox,
   ComboboxContent,
@@ -63,7 +60,7 @@ import {
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
-} from "@/components/ui/combobox";
+} from "@vestly/ui/components/combobox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -80,9 +77,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+} from "@vestly/ui/components/dropdown-menu";
+import { Field, FieldGroup, FieldLabel } from "@vestly/ui/components/field";
+import { Input } from "@vestly/ui/components/input";
 import {
   Select,
   SelectContent,
@@ -90,8 +87,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "@vestly/ui/components/select";
+import { Textarea } from "@vestly/ui/components/textarea";
+import NextImage from "next/image";
+import { useState } from "react";
+import { Example, ExampleWrapper } from "@/components/example";
 
 export function ComponentExample() {
   return (

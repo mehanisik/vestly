@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { authClient } from "@vestly/auth/client";
 import { useActionState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import SignupPage from "@/app/signup/page";
-import { authClient } from "@/lib/auth-client";
 
 const JOIN_VESTLY_REGEX = /Join Vestly/i;
 const NAME_REGEX = /Name/i;

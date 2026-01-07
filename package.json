@@ -8,17 +8,24 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "check": "ultracite check",
-    "fix": "ultracite fix",
-    "prepare": "lefthook install",
-    "db:push": "bun --filter @vestly/db run db:push",
-    "db:studio": "bun --filter @vestly/db run db:studio"
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "check": "npx ultracite@latest check",
+    "fix": "npx ultracite@latest fix",
+    "db:push": "bun run --filter @vestly/db db:push",
+    "db:studio": "bun run --filter @vestly/db db:studio",
+    "db:generate": "bun run --filter @vestly/db db:generate",
+    "bump-deps": "bunx npm-check-updates --deep -u && bun install",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "turbo typecheck",
+    "prepare": "lefthook install"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11",
     "@types/node": "^25.0.3",
     "lefthook": "^2.0.13",
-    "turbo": "^2.7.2",
+    "turbo": "^2.7.3",
+    "typescript": "^5.9.3",
     "ultracite": "7.0.6"
   },
   "packageManager": "bun@1.1.8"

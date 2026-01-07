@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { authClient } from "@vestly/auth/client";
 import { useActionState } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import LoginPage from "@/app/login/page";
-import { authClient } from "@/lib/auth-client";
 
 const WELCOME_BACK_REGEX = /Welcome Back/i;
 const EMAIL_REGEX = /Email/i;

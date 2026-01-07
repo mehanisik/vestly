@@ -1,5 +1,14 @@
 "use client";
 
+import { authClient } from "@vestly/auth/client";
+import { Button } from "@vestly/ui/components/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@vestly/ui/components/card";
+import { Input } from "@vestly/ui/components/input";
 import { motion } from "framer-motion";
 import {
   ArrowDownRight,
@@ -16,16 +25,12 @@ import {
   Wallet,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
 
 export default function DashboardPage() {
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
@@ -59,7 +64,6 @@ export default function DashboardPage() {
 
   return (
     <div className="flex min-h-screen bg-[#F8F9FC] dark:bg-slate-950">
-      {/* Sidebar */}
       <aside className="fixed top-0 left-0 z-40 h-screen w-64 border-r bg-white dark:bg-slate-900/50 dark:backdrop-blur-xl">
         <div className="flex h-16 items-center px-6">
           <div className="flex items-center gap-2 font-bold text-xl">
@@ -70,7 +74,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <nav className="mt-4 space-y-1 px-3">
+        <nav aria-label="Sidebar navigation" className="mt-4 space-y-1 px-3">
           {[
             { icon: LayoutDashboard, label: "Overview", active: true },
             { icon: TrendingUp, label: "Analytics" },
@@ -78,12 +82,14 @@ export default function DashboardPage() {
             { icon: Settings, label: "Settings" },
           ].map((item) => (
             <button
+              aria-current={item.active ? "page" : undefined}
               className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 font-medium text-sm transition-colors ${
                 item.active
                   ? "bg-primary/10 text-primary"
                   : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
               }`}
               key={item.label}
+              type="button"
             >
               <item.icon className="h-4 w-4" />
               {item.label}
@@ -94,8 +100,10 @@ export default function DashboardPage() {
 
         <div className="absolute bottom-4 w-full px-3">
           <button
+            aria-label="Log out"
             className="flex w-full items-center gap-3 rounded-lg px-3 py-2 font-medium text-rose-500 text-sm transition-colors hover:bg-rose-50"
             onClick={handleLogout}
+            type="button"
           >
             <LogOut className="h-4 w-4" />
             Logout
@@ -103,20 +111,24 @@ export default function DashboardPage() {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="ml-64 flex-1">
-        {/* Header */}
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-white/80 px-8 backdrop-blur-md dark:bg-slate-900/80">
           <div className="relative w-96">
             <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
             <Input
+              aria-label="Search assets"
               className="border-none bg-slate-100/50 pl-10 dark:bg-slate-800/50"
               placeholder="Search assets..."
             />
           </div>
 
           <div className="flex items-center gap-4">
-            <Button className="relative" size="icon" variant="ghost">
+            <Button
+              aria-label="Notifications"
+              className="relative"
+              size="icon"
+              variant="ghost"
+            >
               <Bell className="h-5 w-5" />
               <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary" />
             </Button>
@@ -135,18 +147,19 @@ export default function DashboardPage() {
           </div>
         </header>
 
-        {/* Dashboard Grid */}
         <div className="p-8">
           <div className="mb-8 flex items-end justify-between">
-            <div>
+            <header>
               <h1 className="font-bold text-2xl tracking-tight">
                 Financial Overview
               </h1>
               <p className="text-slate-500">
                 Welcome back, here's what's happening with your portfolio today.
               </p>
-            </div>
-            <Button className="font-semibold">Add New Asset</Button>
+            </header>
+            <Button className="font-semibold" type="button">
+              Add New Asset
+            </Button>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -209,10 +222,12 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          {/* Placeholder for Content */}
           <div className="mt-8 grid gap-6 lg:grid-cols-3">
             <Card className="col-span-2 flex min-h-[400px] flex-col items-center justify-center border-none bg-white p-8 shadow-sm dark:bg-slate-900/50">
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+              <div
+                aria-hidden="true"
+                className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary"
+              >
                 <TrendingUp className="h-6 w-6" />
               </div>
               <h3 className="font-semibold text-lg">Portfolio Performance</h3>
@@ -226,12 +241,24 @@ export default function DashboardPage() {
               <div className="space-y-4">
                 {[1, 2, 3, 4, 5].map((item) => (
                   <div className="flex items-center gap-3" key={item}>
-                    <div className="h-8 w-8 rounded bg-slate-100 dark:bg-slate-800" />
+                    <div
+                      aria-hidden="true"
+                      className="h-8 w-8 rounded bg-slate-100 dark:bg-slate-800"
+                    />
                     <div className="flex-1">
-                      <div className="h-3 w-24 rounded bg-slate-100 dark:bg-slate-800" />
-                      <div className="mt-1 h-2 w-16 rounded bg-slate-50 dark:bg-slate-900" />
+                      <div
+                        aria-hidden="true"
+                        className="h-3 w-24 rounded bg-slate-100 dark:bg-slate-800"
+                      />
+                      <div
+                        aria-hidden="true"
+                        className="mt-1 h-2 w-16 rounded bg-slate-50 dark:bg-slate-900"
+                      />
                     </div>
-                    <div className="h-3 w-12 rounded bg-slate-100 dark:bg-slate-800" />
+                    <div
+                      aria-hidden="true"
+                      className="h-3 w-12 rounded bg-slate-100 dark:bg-slate-800"
+                    />
                   </div>
                 ))}
               </div>

@@ -5,7 +5,9 @@
   "main": "index.ts",
   "scripts": {
     "dev": "PORT=3001 BETTER_AUTH_URL=http://localhost:3001 bun --env-file=../../.env run --hot index.ts",
-    "build": "bun x tsc --noEmit"
+    "build": "bun run typecheck",
+    "clean": "git clean -xdf .cache .turbo dist node_modules",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "hono": "^4.6.16",

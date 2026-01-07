@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@vestly/ui/lib/utils";
 
 function ExampleWrapper({ className, ...props }: React.ComponentProps<"div">) {
   return (

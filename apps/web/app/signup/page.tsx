@@ -1,6 +1,11 @@
 "use client";
 
 import { GithubLogo, GoogleLogo } from "@phosphor-icons/react";
+import { authClient } from "@vestly/auth/client";
+import { Button } from "@vestly/ui/components/button";
+import { Input } from "@vestly/ui/components/input";
+import { Label } from "@vestly/ui/components/label";
+import { Separator } from "@vestly/ui/components/separator";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
@@ -11,13 +16,9 @@ import {
   User,
   Wallet,
 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { authClient } from "@/lib/auth-client";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -29,7 +30,9 @@ export default function SignupPage() {
   const [socialPending, setSocialPending] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSocialLogin = async (provider: "google" | "github") => {
+  const handleSocialLogin = async (
+    provider: "google" | "github"
+  ): Promise<void> => {
     setSocialPending(provider);
     try {
       await authClient.signIn.social({
@@ -41,7 +44,7 @@ export default function SignupPage() {
     }
   };
 
-  const handleSignup = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     setPending(true);
     setError(null);
@@ -70,7 +73,6 @@ export default function SignupPage() {
 
   return (
     <main className="flex min-h-screen overflow-hidden">
-      {/* Left Decoration / Hero Side */}
       <div className="relative hidden w-1/2 flex-col bg-slate-900 p-12 text-white lg:flex">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.15),transparent)]" />
         <div className="absolute inset-0 bg-grid-primary/10" />
@@ -111,7 +113,6 @@ export default function SignupPage() {
         </div>
       </div>
 
-      {/* Right Form Side */}
       <div className="flex w-full items-center justify-center p-8 lg:w-1/2">
         <motion.div
           animate={{ opacity: 1, scale: 1 }}
@@ -213,6 +214,7 @@ export default function SignupPage() {
                   value={password}
                 />
                 <button
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute top-3 right-3 text-muted-foreground hover:text-foreground"
                   onClick={() => setShowPassword(!showPassword)}
                   type="button"
@@ -267,12 +269,12 @@ export default function SignupPage() {
 
           <p className="text-center text-muted-foreground text-sm">
             Already have an account?{" "}
-            <a
+            <Link
               className="font-semibold text-primary hover:underline"
               href="/login"
             >
               Sign in
-            </a>
+            </Link>
           </p>
         </motion.div>
       </div>
